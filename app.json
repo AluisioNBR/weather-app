@@ -1,14 +1,16 @@
 {
   "expo": {
-    "name": "weather-app",
+    "name": "Weather App",
     "slug": "weather-app",
-    "version": "1.0.0",
+    "version": "2.2.0",
+    "description": "App simples para consumir os dados da API do Open Weather Map",
+    "githubUrl": "https://github.com/AluisioNBR/weather-web-native-app",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#333333"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,17 +19,28 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "2.2.0",
+      "bundleIdentifier": "com.aluisionbr.weatherapp"
     },
     "android": {
+      "package": "com.aluisionbr.weatherapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#333333"
       },
-      "package": "com.aluisionbr.weatherapp"
+      "permissions": [
+        "LOCATION"
+      ],
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "02636cc9-e6c6-42d4-bfc4-233057d70453"
+      }
     }
   }
 }
