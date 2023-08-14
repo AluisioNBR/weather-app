@@ -15,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "buildNumber": "2.2.0",
@@ -29,9 +27,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#333333"
       },
-      "permissions": [
-        "LOCATION"
-      ],
+      "permissions": ["LOCATION"],
       "versionCode": 5
     },
     "web": {
@@ -41,6 +37,14 @@
       "eas": {
         "projectId": "02636cc9-e6c6-42d4-bfc4-233057d70453"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Para uma busca dinâmica, permita que o Weather-App acesse sua localização."
+        }
+      ]
+    ]
   }
 }
