@@ -5,9 +5,9 @@ export function ReturnButton(props: ReturnButtonProps) {
   return (
     <View
       style={{ backgroundColor: props.background }}
-      className="rounded-full w-36"
+      className="mt-8 rounded-full w-36 p-2"
     >
-      <Text className="font-poppins text-center text-3xl text-white-main">
+      <Text className="font-poppins text-center text-2xl text-white-main">
         Fechar
       </Text>
     </View>

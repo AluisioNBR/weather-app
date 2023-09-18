@@ -1,9 +1,9 @@
 import { CurrentWeather } from "../../../components/statements/types/CurrentWeather.types";
+import { AppMsg } from "./AppMsg.interface";
 
 export interface CurrentTemperatureProps {
-  msg: string;
+  msg: AppMsg;
   visibility: boolean;
-  loadingWeather: boolean;
 
   city: string;
   state: string;

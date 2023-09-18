@@ -12,7 +12,7 @@ export function getCurrentDate() {
   dateArray.forEach((item) => checkDate(item, currentDate));
 
   const Base = {
-    year: Number(currentDate[4]),
+    year: Number(currentDate[0]),
     month: dateToAnalysis.getMonth() + 1,
     day: Number(currentDate[2]),
   };
@@ -28,15 +28,15 @@ export function returnDate(params: ReturnDateFunctionParams) {
 
   dateArray.forEach((item) => checkDate(item, currentDate));
 
-  const dayName = currentDate[0] as TypeDayName;
-  const dayNumber = getDayOrMonth(currentDate[2]);
+  const dayName = `Day${date.getDay()}` as TypeDayName;
+  const dayNumber = getDayOrMonth(currentDate[0]);
   const monthNumber = getDayOrMonth(date.getMonth() + 1);
 
-  return `${DayNames[dayName]}, ${dayNumber}/${monthNumber}/${currentDate[3]}`;
+  return `${DayNames[dayName]}, ${dayNumber}/${monthNumber}/${currentDate[2]}`;
 }
 
 function getDateArray(date: Date) {
-  return date.toLocaleString().split(" ");
+  return date.toLocaleString().split(" ")[0].split("/");
 }
 
 function checkDate(item: string, currentDate: string[]) {

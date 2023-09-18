@@ -1,54 +1,60 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFonts } from "expo-font";
-import { Text, View, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 
-import type {
-  CitySelectionProps,
-  ContentContext,
-} from "../../types/CitySelection.types";
-import { useForegroundPermissions, geocodeAsync } from "expo-location";
-import { SubmitButton } from "./SubmitButton";
+import type { CitySelectionProps } from "../../types/CitySelection.types";
+import {
+  useForegroundPermissions,
+  getCurrentPositionAsync,
+} from "expo-location";
+import { submitCity } from "../../../../components/functions/submitCity/submitCity";
+import { submitCoords } from "../../../../components/functions/submitCity/submitCoords";
 
 export function CitySelection(props: CitySelectionProps) {
   const [status, requestPermission] = useForegroundPermissions();
+  const runCount = useRef(0);
   const [cityValue, setCityValue] = useState("");
   const [fontLoaded] = useFonts({
-    Poppins: require("./../assets/Poppins/Poppins-Regular.ttf"),
+    Poppins: require("../../../../../assets/Poppins/Poppins-Regular.ttf"),
   });
 
   useEffect(() => {
-    (async () => {
-      const res = await requestPermission();
-      console.log(res);
-      if (res.granted) {
-        const geoCode = await geocodeAsync("London");
-      }
-    })();
+    if (runCount.current === 0)
+      (async () => {
+        const res = await requestPermission();
+        if (res.granted) {
+          props.setMsgValue({
+            msg: "Estamos buscando o clima para a sua localização...",
+            duration: 6000,
+          });
+          const { coords } = await getCurrentPositionAsync();
+          const { latitude, longitude } = coords;
+          submitCoords({ lat: latitude, lon: longitude }, props);
+        }
+        runCount.current += 1;
+      })();
   }, []);
 
-  const contentContext: ContentContext = {
-    cityValue,
-    setCityValue,
-    citySelectionProps: props,
-  };
+  function submitEditing() {
+    props.setMsgValue({ msg: "", duration: 6000 });
+    props.setTemperatureVisibility(false);
+    submitCity({ cityValue, setCityValue, citySelectionProps: props });
+  }
 
   const onInputChangeText = (newText: string) => setCityValue(newText);
 
   return (
     <View className="items-center">
-      <View>
-        <Text className="text-white-main text-xl font-poppins">
-          Informe sua cidade:
-        </Text>
-      </View>
-
       <TextInput
-        className="text-white-main text-xl font-poppins p-2 w-80"
+        className="text-white-main text-xl text-center font-poppins p-2 w-80 bg-[#5555] rounded-full"
         defaultValue={cityValue}
+        placeholder={
+          props.city ? `${props.city}, ${props.state}` : "Informe sua cidade"
+        }
+        placeholderTextColor={"#fdfdfd"}
         onChangeText={onInputChangeText}
+        onSubmitEditing={submitEditing}
       />
-
-      <SubmitButton>{contentContext}</SubmitButton>
     </View>
   );
 }

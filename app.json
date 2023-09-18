@@ -2,7 +2,7 @@
   "expo": {
     "name": "Weather App",
     "slug": "weather-app",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "description": "App simples para consumir os dados da API do Open Weather Map",
     "githubUrl": "https://github.com/AluisioNBR/weather-web-native-app",
     "orientation": "portrait",
@@ -44,7 +44,8 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Para uma busca dinâmica, permita que o Weather-App acesse sua localização."
         }
-      ]
+      ],
+      "expo-router"
     ]
   }
 }

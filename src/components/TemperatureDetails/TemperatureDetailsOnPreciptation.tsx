@@ -1,26 +1,18 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { TemperatureDetailsOnPreciptationProps } from "../types/details.types";
+import { Detail } from "./Detail";
 
 export function TemperatureDetailsOnPreciptation(
   props: TemperatureDetailsOnPreciptationProps
 ) {
   return (
-    <View className="items-center rounded-full bg-black-1 p-1">
-      <View className="flex-row items-center justify-between">
-        <Text className="font-poppins text-sm text-white-main mx-2">
-          Umidade: {props.humidity}
-        </Text>
-
-        <Text className="font-poppins text-sm text-white-main mx-2">
-          Índice UV: {props.uvi}
-        </Text>
-      </View>
-
-      <View className="items-center">
-        <Text className="font-poppins text-sm text-white-main mx-2">
-          {props.children}: {props.preciptation}
-        </Text>
-      </View>
+    <View className="h-24 justify-evenly items-center rounded-full bg-[#5555] p-2 w-[85%]">
+      {props.feels_like ? (
+        <Detail title="Sensação térmica">{props.feels_like}°C</Detail>
+      ) : null}
+      <Detail title="Umidade">{props.humidity}</Detail>
+      <Detail title="Índice UV">{props.uvi}</Detail>
+      <Detail title={props.children}>{props.preciptation}</Detail>
     </View>
   );
 }

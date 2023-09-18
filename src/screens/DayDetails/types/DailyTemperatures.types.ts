@@ -1,7 +1,13 @@
 import { DayWeather } from "../../../components/statements/types/DayWeather.types";
-import { AppColors } from "../../../styles/AppColors";
 
-export type TypeDayName = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
+export type TypeDayName =
+  | "Day0"
+  | "Day1"
+  | "Day2"
+  | "Day3"
+  | "Day4"
+  | "Day5"
+  | "Day6";
 
 export interface ReturnDateFunctionParams {
   baseYear: number;
@@ -39,7 +45,7 @@ export interface InformationByDayInstantsProps {
 
 export interface DayButtonProps {
   children: DayWeather;
-  background: AppColors;
+  background: string;
   date: string;
 }
 

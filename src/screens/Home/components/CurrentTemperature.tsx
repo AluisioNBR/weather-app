@@ -1,32 +1,30 @@
-import { Text, View, Image } from "react-native";
+import { Text, View } from "react-native";
 import { useFonts } from "expo-font";
 
 import { MainTemperature } from "../../../components/MainTemperature/MainTemperature";
 import { TemperatureDetails } from "../../../components/TemperatureDetails/TemperatureDetails";
 
-import type {
-  CurrentTemperatureProps,
-  LocalizationProps,
-} from "../types/CurrentTemperature.types";
+import type { CurrentTemperatureProps } from "../types/CurrentTemperature.types";
+import { AnimatedLoading } from "../../../components/AnimatedLoading/AnimatedLoading";
 
-function CurrentTemperature(props: CurrentTemperatureProps) {
+export function CurrentTemperature(props: CurrentTemperatureProps) {
   const [loaded] = useFonts({
-    Poppins: require("../assets/Poppins/Poppins-Regular.ttf"),
+    Poppins: require("../../../../assets/Poppins/Poppins-Regular.ttf"),
   });
 
   if (props.visibility)
     return (
       <View className="m-4 items-center">
-        <Localization city={props.city} state={props.state} />
-
         <MainTemperature
+          main={props.children.main}
           icon={props.children.icon}
           temperature={String(props.children.temp)}
-          feels_like={String(props.children.feels_like)}
           description={props.children.description}
+          imgSize={100}
         />
 
         <TemperatureDetails
+          feels_like={String(props.children.feels_like)}
           humidity={props.children.humidity}
           uvi={props.children.uvi}
           rain={props.children.rain}
@@ -36,28 +34,16 @@ function CurrentTemperature(props: CurrentTemperatureProps) {
     );
   else
     return (
-      <View className="m-4 items-center">
-        <Text className="font-poppins text-2xl">{props.msg}</Text>
+      <View className="m-16 items-center justify-center">
+        {props.msg.duration == 0 ? (
+          <Text className="font-poppins text-2xl text-white-main text-center">
+            {props.msg.msg}
+          </Text>
+        ) : (
+          <AnimatedLoading duration={props.msg.duration}>
+            {props.msg.msg}
+          </AnimatedLoading>
+        )}
       </View>
     );
 }
-
-function Localization(props: LocalizationProps) {
-  const [loaded] = useFonts({
-    Poppins: require("../assets/Poppins/Poppins-Regular.ttf"),
-  });
-  return (
-    <View className="flex-row items-center">
-      <Image
-        style={{ width: 32, height: 32 }}
-        source={require("../assets/pin-localization.png")}
-      />
-
-      <Text className="font-poppins text-2xl">
-        {props.city}, {props.state}
-      </Text>
-    </View>
-  );
-}
-
-export { CurrentTemperature };

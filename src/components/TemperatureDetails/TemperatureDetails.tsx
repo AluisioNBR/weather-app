@@ -11,6 +11,7 @@ export function TemperatureDetails(props: TemperatureDetailsProps) {
     const amountOfRain = props.rain as AmountOfRain;
     return (
       <TemperatureDetailsOnPreciptation
+        feels_like={props.feels_like}
         humidity={`${props.humidity}%`}
         uvi={`${props.uvi}%`}
         preciptation={`${amountOfRain.rain}mm`}
@@ -22,6 +23,7 @@ export function TemperatureDetails(props: TemperatureDetailsProps) {
     const amountOfSnow = props.snow as AmountOfSnow;
     return (
       <TemperatureDetailsOnPreciptation
+        feels_like={props.feels_like}
         humidity={`${props.humidity}%`}
         uvi={`${props.uvi}%`}
         preciptation={`${amountOfSnow.snow}mm`}
@@ -32,6 +34,7 @@ export function TemperatureDetails(props: TemperatureDetailsProps) {
   } else
     return (
       <TemperatureDetailsOnClearWeather
+        feels_like={props.feels_like}
         humidity={`${props.humidity}%`}
         uvi={`${props.uvi}%`}
       />

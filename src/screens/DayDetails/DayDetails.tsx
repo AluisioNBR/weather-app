@@ -10,6 +10,7 @@ import {
 import colors from "../../../colors";
 import { ModalInformations } from "./components/ModalInformations";
 import { DayTemperatureProps } from "./types/DailyTemperatures.types";
+import { ReturnButton } from "../HourDetails/component/ReturnButton";
 
 export function DayDetails() {
   const navigation = useNavigation<AppNavigationType>();
@@ -17,9 +18,11 @@ export function DayDetails() {
   const params = route.params as DayTemperatureProps;
 
   const [loaded] = useFonts({
-    Poppins: require("../assets/Poppins/Poppins-Regular.ttf"),
+    Poppins: require("../../../assets/Poppins/Poppins-Regular.ttf"),
   });
-  const [returnButtonColor, setReturnButtonColor] = useState(colors.black[2]);
+  const [returnButtonColor, setReturnButtonColor] = useState(
+    colors.gray.opacity
+  );
 
   return (
     <View className="flex-1 bg-black-main items-center, justify-center">
@@ -30,17 +33,10 @@ export function DayDetails() {
 
         <Pressable
           onPress={() => navigation.goBack()}
-          onPressIn={() => setReturnButtonColor(colors.black[3])}
-          onPressOut={() => setReturnButtonColor(colors.black[2])}
+          onPressIn={() => setReturnButtonColor(colors.black.opacity)}
+          onPressOut={() => setReturnButtonColor(colors.gray.opacity)}
         >
-          <View
-            style={{ backgroundColor: returnButtonColor }}
-            className="rounded-full w-36"
-          >
-            <Text className="font-poppins text-white-main text-3xl text-center">
-              Fechar
-            </Text>
-          </View>
+          <ReturnButton background={returnButtonColor} />
         </Pressable>
       </View>
     </View>

@@ -1,5 +1,5 @@
 import { ScrollView } from "react-native";
-import { HourTemperature } from "./HourTemperature/HourTemperature";
+import { HourTemperature } from "./HourTemperature";
 import type { HourlyTemperaturesContainerProps } from "../../HourDetails/types/HourlyTemperatures.types";
 import { HourWeather } from "../../../components/statements/types/HourWeather.types";
 
@@ -17,7 +17,7 @@ function HourlyTemperaturesContainer(props: HourlyTemperaturesContainerProps) {
   }
 
   return (
-    <ScrollView className="flex-1" horizontal={true}>
+    <ScrollView className="flex-1 mb-2" horizontal={true}>
       {temperatures}
     </ScrollView>
   );

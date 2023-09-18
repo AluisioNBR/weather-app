@@ -1,3 +1,5 @@
+import { DayWeather } from "../statements/types/DayWeather.types";
+import { HourWeather } from "../statements/types/HourWeather.types";
 import {
   NoRain,
   AmountOfRain,
@@ -6,16 +8,11 @@ import {
 } from "../statements/types/WeatherPreciptationState.types";
 
 export interface CompostTemperatureDetailsProps {
-  children: {
-    humidity: number;
-    uvi: number;
-    pop: number;
-    rain: NoRain | AmountOfRain;
-    snow: NoSnow | AmountOfSnow;
-  };
+  children: HourWeather | DayWeather;
 }
 
 export interface TemperatureDetailsProps {
+  feels_like: string;
   humidity: number;
   uvi: number;
   rain: NoRain | AmountOfRain;
@@ -23,6 +20,7 @@ export interface TemperatureDetailsProps {
 }
 
 export interface TemperatureDetailsOnPreciptationProps {
+  feels_like: string;
   humidity: string;
   uvi: string;
   children: string;
@@ -30,6 +28,7 @@ export interface TemperatureDetailsOnPreciptationProps {
 }
 
 export interface TemperatureDetailsOnClearWeatherProps {
+  feels_like: string;
   humidity: string;
   uvi: string;
 }

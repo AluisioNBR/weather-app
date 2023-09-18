@@ -1,24 +1,15 @@
 import axios from "axios";
-
-import { renderInformations, renderErr } from "./render";
-
-import type {
-  FoundDataOfRequest,
-  NotFoundDataOfRequest,
-} from "./types/data.types";
-
 import type {
   submitCityParams,
   FetchWeatherInformationReturn,
   FetchWeatherInformationParams,
-  VerifyResponseParams,
 } from "./types/submitCity.types";
+import { verifyResponse } from "./verifyResponse";
+// @ts-ignore
+import { MY_API_SECRET } from "@env";
 
-async function submitCity(params: submitCityParams) {
-  const information = await fetchWeatherInformation({
-    cityValue: params.cityValue,
-    setLoadingWeather: params.citySelectionProps.setLoadingWeather,
-  });
+export async function submitCity(params: submitCityParams) {
+  const information = await fetchWeatherInformation(params.cityValue);
 
   verifyResponse({
     information,
@@ -28,15 +19,16 @@ async function submitCity(params: submitCityParams) {
 }
 
 async function fetchWeatherInformation(
-  params: FetchWeatherInformationParams
+  cityValue: string
 ): Promise<FetchWeatherInformationReturn> {
   let fetchResponse: FetchWeatherInformationReturn;
 
-  const endpoint = `https://weather-webapp-tau.vercel.app/api/${params.cityValue}`;
-  const requestParams = { myApiSecret: process.env.MY_API_SECRET };
+  const endpoint = `https://weather-webapp-tau.vercel.app/api/${cityValue}`;
+  const requestParams = {
+    myApiSecret: MY_API_SECRET,
+  };
   try {
     const data = await axios.get(endpoint, { params: requestParams });
-    setTimeout(() => params.setLoadingWeather(false), 5000);
     fetchResponse = await data.data;
   } catch (error) {
     fetchResponse = {
@@ -47,17 +39,3 @@ async function fetchWeatherInformation(
 
   return fetchResponse;
 }
-
-function verifyResponse(params: VerifyResponseParams) {
-  if (params.information.cod === 200)
-    renderInformations(
-      params.information as FoundDataOfRequest,
-      params.citySelectionProps
-    );
-  else {
-    const informationFailed = params.information as NotFoundDataOfRequest;
-    renderErr(informationFailed.msg, params.citySelectionProps);
-  }
-}
-
-export { submitCity };

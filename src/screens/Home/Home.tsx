@@ -1,4 +1,11 @@
-import { useState, useEffect, useReducer, useCallback, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useReducer,
+  useCallback,
+  useRef,
+  useLayoutEffect,
+} from "react";
 import { View } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
@@ -18,10 +25,20 @@ import {
 import { CurrentWeather } from "../../components/statements/types/CurrentWeather.types";
 import { DayWeather } from "../../components/statements/types/DayWeather.types";
 import { HourWeather } from "../../components/statements/types/HourWeather.types";
+import { AppMsg } from "./types/AppMsg.interface";
+import { useForegroundPermissions } from "expo-location";
 
 async () => SplashScreen.preventAutoHideAsync();
 
 export function Home() {
+  const [status, requestPermission] = useForegroundPermissions();
+
+  useEffect(() => {
+    (async () => {
+      const res = await requestPermission();
+    })();
+  }, []);
+
   const [weatherState, weatherDispatch] = useReducer(
     weatherReducer,
     weatherInitialValue
@@ -45,14 +62,14 @@ export function Home() {
   }, []);
 
   const [temperatureVisibility, setTemperatureVisibility] = useState(false);
-  const [loadingWeather, setLoadingWeather] = useState(false);
-  const [msgValue, setMsgValue] = useState(
-    "Informe sua cidade para começarmos!"
-  );
+  const [msgValue, setMsgValue] = useState<AppMsg>({
+    msg: "",
+    duration: 0,
+  });
 
   const [appLoaded, setAppLoaded] = useState(false);
   const [fontLoaded] = useFonts({
-    Poppins: require("../assets/Poppins/Poppins-Regular.ttf"),
+    Poppins: require("../../../assets/Poppins/Poppins-Regular.ttf"),
   });
 
   let loadingFont = setInterval(() => {
@@ -60,10 +77,11 @@ export function Home() {
     else if (fontLoaded) {
       setAppLoaded(true);
     }
+    console.log(appLoaded);
   }, 1000);
 
   useEffect(() => {
-    clearInterval(loadingFont);
+    if (appLoaded) clearInterval(loadingFont);
   }, [appLoaded]);
 
   const counterAppLoadedRenders = useRef(0);
@@ -74,7 +92,7 @@ export function Home() {
     }
   }, [appLoaded, counterAppLoadedRenders]);
 
-  if (!appLoaded || loadingWeather) return <AnimatedLoading />;
+  if (!fontLoaded) return <AnimatedLoading />;
   else
     return (
       <View className="flex-1 items-center bg-black-main p-4">
@@ -82,9 +100,10 @@ export function Home() {
 
         <View className="flex-1 pt-8">
           <CitySelection
+            city={weatherState.city}
+            state={weatherState.state}
             setMsgValue={setMsgValue}
             setTemperatureVisibility={setTemperatureVisibility}
-            setLoadingWeather={setLoadingWeather}
             setLocalization={setLocalization}
             setCurrentWeather={setCurrentWeather}
             setHourlyWeather={setHourlyWeather}
@@ -94,7 +113,6 @@ export function Home() {
           <CurrentTemperature
             msg={msgValue}
             visibility={temperatureVisibility}
-            loadingWeather={loadingWeather}
             city={weatherState.city}
             state={weatherState.state}
           >

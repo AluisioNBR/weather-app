@@ -8,7 +8,7 @@ import { getCurrentDate, returnDate } from "../functions/dailyContainer";
 export function DailyTemperaturesContainer({
   children,
 }: DailyTemperaturesContainerProps) {
-  let [baseYear, baseNumberMonth, baseNumberDay] = getCurrentDate();
+  let [baseNumberDay, baseNumberMonth, baseYear] = getCurrentDate();
 
   const temperatures = children.map(mapTemperatureHours);
 
@@ -27,5 +27,9 @@ export function DailyTemperaturesContainer({
     );
   }
 
-  return <ScrollView className="flex-1">{temperatures}</ScrollView>;
+  return (
+    <ScrollView className="flex-1" horizontal={true}>
+      {temperatures}
+    </ScrollView>
+  );
 }

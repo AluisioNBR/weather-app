@@ -1,3 +1,4 @@
+import { MainType } from "../../../types/icons.enum";
 import {
   NoRain,
   AmountOfRain,
@@ -11,6 +12,7 @@ export interface CurrentWeather {
   uvi: number;
   humidity: number;
   description: string;
+  main: MainType;
   icon: string;
   rain: NoRain | AmountOfRain;
   snow: NoSnow | AmountOfSnow;

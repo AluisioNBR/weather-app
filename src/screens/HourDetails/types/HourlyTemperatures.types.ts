@@ -1,5 +1,4 @@
 import { HourWeather } from "../../../components/statements/types/HourWeather.types";
-import { AppColors } from "../../../styles/AppColors";
 
 export interface HourlyTemperaturesContainerProps {
   children: any[] | HourWeather[];
@@ -14,11 +13,7 @@ export interface HourDetailsProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export interface HourButtonProps {
-  children: HourWeather;
-  background: AppColors;
-}
 
 export interface ReturnButtonProps {
-  background: AppColors;
+  background: string;
 }

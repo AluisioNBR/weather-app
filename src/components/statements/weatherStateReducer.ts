@@ -13,6 +13,7 @@ export const weatherInitialValue: WeatherState = {
     uvi: 0,
     humidity: 0,
     description: "",
+    main: "",
     icon: "",
     rain: { rainy: "no-rain" },
     snow: { snowed: "no-snow" },

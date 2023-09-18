@@ -2,7 +2,7 @@ import type { FoundDataOfRequest } from "./types/data.types";
 import type { CitySelectionProps } from "../../../screens/Home/types/CitySelection.types";
 
 function renderErr(msg: string, citySelectionProps: CitySelectionProps) {
-  citySelectionProps.setMsgValue(msg);
+  citySelectionProps.setMsgValue({ msg: msg, duration: 0 });
   citySelectionProps.setTemperatureVisibility(false);
 }
 
